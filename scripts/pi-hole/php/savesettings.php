@@ -550,12 +550,17 @@ function readAdlists()
 					if(strlen($ip) == 0)
 						$ip = "noip";
 
-					// Test if this MAC address is already included
+					// Test if this MAC or IP address is already included
 					readStaticLeasesFile();
 					foreach($dhcp_static_leases as $lease) {
 						if($lease["hwaddr"] === $mac)
 						{
-							$error .= "Static release for MAC address (".htmlspecialchars($mac).") already defined!<br>";
+							$error .= "Static reservation for MAC address (".htmlspecialchars($mac).") already defined!<br>";
+							break;
+						}
+						if($lease["IP"] === $ip)
+						{
+							$error .= "Static reservation for IP address (".$ip.") already defined!<br>";
 							break;
 						}
 					}
